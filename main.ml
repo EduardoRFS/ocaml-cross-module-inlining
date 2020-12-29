@@ -1,0 +1,1 @@
+let x = Lib.add (Lib.of_int 5) (Lib.of_int 7)
