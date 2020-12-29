@@ -18,9 +18,16 @@ camlMain__code_begin:
 	.align	8
 	.data
 	.align	8
-	.quad	1792
+	.quad	3063
+camlMain__1:
+	.quad	camlMain__add_five_80
+	.quad	3
+	.data
+	.align	8
+	.quad	2816
 	.globl	camlMain
 camlMain:
+	.quad	1
 	.quad	1
 	.data
 	.align	8
@@ -30,12 +37,25 @@ camlMain__gc_roots:
 	.quad	0
 	.text
 	.align	16
+	.globl	camlMain__add_five_80
+camlMain__add_five_80:
+	.cfi_startproc
+.L100:
+	addq	$10, %rax
+	ret
+	.cfi_endproc
+	.type camlMain__add_five_80,@function
+	.size camlMain__add_five_80,. - camlMain__add_five_80
+	.text
+	.align	16
 	.globl	camlMain__entry
 camlMain__entry:
 	.cfi_startproc
-.L100:
-	movq	camlMain@GOTPCREL(%rip), %rax
-	movq	$25, (%rax)
+.L101:
+	movq	camlMain__1@GOTPCREL(%rip), %rax
+	movq	camlMain@GOTPCREL(%rip), %rbx
+	movq	%rax, (%rbx)
+	movq	$25, 8(%rbx)
 	movl	$1, %eax
 	ret
 	.cfi_endproc
